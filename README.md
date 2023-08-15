@@ -9,6 +9,19 @@ The code is built upon the Imaginaire library from the Deep Imagination Research
 For business inquiries, please submit the [NVIDIA research licensing form](https://www.nvidia.com/en-us/research/inquiries/).
 
 ## Installation
+
+Easy way of installation:
+
+1.    This method comes with the conda environment and all dependencies installed. Run this only once to build the container. 
+
+
+    ./docker.sh -b
+
+
+2.    After this everytime you want to access the container, run
+
+    ./docker.sh
+
 We offer two ways to setup the environment:
 1. We provide prebuilt Docker images, where
     - `docker.io/chenhsuanlin/colmap:3.9` is for running COLMAP and the data preprocessing scripts. This includes the prebuilt COLMAP library (CUDA-supported).
