@@ -1,0 +1,41 @@
+version: "3.5"
+
+services:
+    build-neuralangelo-base:
+        build:
+            context: .
+            dockerfile: ./docker/Dockerfile
+        image: neuralangelo:test
+    build-colmap-base:
+        build:
+            context: .
+            dockerfile: ./docker/Dockerfile-colmap
+        image: colmap:test
+    develop-container-neuralangelo:
+        runtime: ${GPU:-runc}
+        privileged: true
+        network_mode: host
+        ipc: host
+        environment:
+            DISPLAY: "${DISPLAY}"
+            QT_X11_NO_MITSHM: 1
+            TERM: xterm-256color
+            NVIDIA_VISIBLE_DEVICES: ${GPU_VISIBLE:-""}
+            NVIDIA_DRIVER_CAPABILITIES: ${GPU_CAPABILITIES:-""}
+        volumes:
+            - /tmp/.X11-unix:/tmp/.X11-unix:rw
+            - /dev:/dev
+            - /lib/modules:/lib/modules
+            - /tmp:/tmp:Z
+            - /run/dbus:/run/dbus 
+            - /var/run/dbus:/var/run/dbus
+            - /run/systemd:/run/systemd
+            - /var/run/systemd:/var/run/systemd
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+            - $HOME/.gitconfig:/root/.gitconfig:ro
+            - $HOME/.bash_history:/root/.bash_history:z
+            - $HOME/Downloads:/root/Downloads:z
+            - $HOME/Documents:/root/Documents:z
+        image: neuralangelo:test
+        tty: true
